@@ -545,7 +545,7 @@ class AutocompleteContainer extends ControlledComponent {
                 }
 
                 return (
-                  <MenuWrapper innerRef={popperProps.ref} style={popperProps.style} zIndex={zIndex}>
+                  <MenuWrapper ref={popperProps.ref} style={popperProps.style} zIndex={zIndex}>
                     {menu}
                   </MenuWrapper>
                 );

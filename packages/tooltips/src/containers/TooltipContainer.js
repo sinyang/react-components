@@ -210,7 +210,7 @@ class TooltipContainer extends ControlledComponent {
 
               const tooltip = (
                 <TooltipWrapper
-                  innerRef={popperProps.ref}
+                  ref={popperProps.ref}
                   style={popperProps.style}
                   zIndex={zIndex}
                 >

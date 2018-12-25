@@ -93,7 +93,7 @@ export default class CollapsibleSubNavItem extends Component {
             <StyledSubNavPanel
               {...getPanelProps({
                 isHidden: !expanded,
-                innerRef: ref => {
+                ref: ref => {
                   this.panelRef = ref;
                 }
               })}

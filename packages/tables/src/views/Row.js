@@ -71,7 +71,7 @@ export default class Row extends Component {
           this.setState({ focused: false });
         })}
         focused={typeof propFocused === 'undefined' ? focused : propFocused}
-        innerRef={rowRef}
+        ref={rowRef}
         {...otherProps}
       />
     );

@@ -98,14 +98,14 @@ class DraggableExample extends React.Component {
             {(provided, droppableSnapshot) => {
               return (
                 <Body
-                  innerRef={provided.innerRef}
+                  ref={provided.ref}
                   isDraggingOver={droppableSnapshot.isDraggingOver}
                 >
                   {this.state.items.map((item, index) => (
                     <Draggable key={item.id} draggableId={item.id} index={index}>
                       {(provided, snapshot) => (
                         <DraggableRow
-                          rowRef={provided.innerRef}
+                          rowRef={provided.ref}
                           isDragging={snapshot.isDragging}
                           isDraggingOver={droppableSnapshot.isDraggingOver}
                           hovered={snapshot.isDragging}

@@ -74,7 +74,7 @@ const Button = ({ focused, buttonRef, ...other }) => (
     {({ getFocusProps, keyboardFocused }) => (
       <StyledButton
         {...getFocusProps({
-          innerRef: buttonRef,
+          ref: buttonRef,
           ...other,
           focused: focused || keyboardFocused
         })}

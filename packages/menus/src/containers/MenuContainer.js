@@ -550,7 +550,7 @@ class MenuContainer extends ControlledComponent {
                 const outOfBoundaries = popperProps['data-x-out-of-boundaries'];
 
                 const menu = (
-                  <MenuWrapper innerRef={popperProps.ref} style={popperProps.style} zIndex={zIndex}>
+                  <MenuWrapper ref={popperProps.ref} style={popperProps.style} zIndex={zIndex}>
                     <FocusJailContainer focusOnMount={false}>
                       {({ getContainerProps: getFocusJailContainerProps, containerRef }) => (
                         <SelectionContainer

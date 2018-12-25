@@ -73,7 +73,7 @@ exports[`CollapsibleSubNavItem States renders expanded styling if provided 1`] =
         aria-hidden={false}
         aria-labelledby="garden-accordion-container-1-header"
         id="garden-accordion-container-1-panel"
-        innerRef={[Function]}
+        ref={[Function]}
         isHidden={false}
         role="region"
       >
@@ -163,7 +163,7 @@ exports[`CollapsibleSubNavItem States renders focused styling if provided 1`] = 
         aria-hidden={true}
         aria-labelledby="garden-accordion-container-2-header"
         id="garden-accordion-container-2-panel"
-        innerRef={[Function]}
+        ref={[Function]}
         isHidden={true}
         role="region"
       >
@@ -254,7 +254,7 @@ exports[`CollapsibleSubNavItem States renders hovered styling if provided 1`] = 
         aria-hidden={true}
         aria-labelledby="garden-accordion-container-3-header"
         id="garden-accordion-container-3-panel"
-        innerRef={[Function]}
+        ref={[Function]}
         isHidden={true}
         role="region"
       >
@@ -341,7 +341,7 @@ exports[`CollapsibleSubNavItem renders default styling 1`] = `
         aria-hidden={true}
         aria-labelledby="garden-accordion-container-0-header"
         id="garden-accordion-container-0-panel"
-        innerRef={[Function]}
+        ref={[Function]}
         isHidden={true}
         role="region"
       >

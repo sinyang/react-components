@@ -7,7 +7,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import classNames from 'classnames';
 import { retrieveTheme, isRtl } from '@zendeskgarden/react-theming';
 import MenuStyles from '@zendeskgarden/css-menus';
@@ -108,7 +108,7 @@ const retrieveAnimation = ({ animate, placement }) => {
     placement === PLACEMENT.TOP_START ||
     placement === PLACEMENT.TOP_END
   ) {
-    return `animation: ${topAnimation}`;
+    return css`animation: ${ topAnimation }`;
   }
 
   if (
@@ -116,7 +116,7 @@ const retrieveAnimation = ({ animate, placement }) => {
     placement === PLACEMENT.LEFT_START ||
     placement === PLACEMENT.LEFT_END
   ) {
-    return `animation: ${leftAnimation}`;
+    return css`animation: ${ leftAnimation }`;
   }
 
   return '';
@@ -208,7 +208,7 @@ const MenuView = props => {
 
   return (
     <MenuWrapper arrow={arrow} placement={placement}>
-      <StyledMenuView innerRef={menuRef} {...otherRefs} />
+      <StyledMenuView ref={menuRef} {...otherRefs} />
     </MenuWrapper>
   );
 };

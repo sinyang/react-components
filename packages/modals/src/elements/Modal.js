@@ -122,7 +122,7 @@ export default class Modal extends ControlledComponent {
         }) => (
           <Portal>
             <Backdrop {...getBackdropProps({ center, animate, ...backdropProps })}>
-              <ModalView {...getModalProps({ animate, ...modalProps })} innerRef={modalRef}>
+              <ModalView {...getModalProps({ animate, ...modalProps })} ref={modalRef}>
                 {Children.map(children, child => {
                   if (!isValidElement(child)) {
                     return child;
