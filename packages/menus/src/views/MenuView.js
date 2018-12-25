@@ -108,7 +108,9 @@ const retrieveAnimation = ({ animate, placement }) => {
     placement === PLACEMENT.TOP_START ||
     placement === PLACEMENT.TOP_END
   ) {
-    return css`animation: ${ topAnimation }`;
+    return css`
+      animation: ${topAnimation};
+    `;
   }
 
   if (
@@ -116,7 +118,9 @@ const retrieveAnimation = ({ animate, placement }) => {
     placement === PLACEMENT.LEFT_START ||
     placement === PLACEMENT.LEFT_END
   ) {
-    return css`animation: ${ leftAnimation }`;
+    return css`
+      animation: ${leftAnimation};
+    `;
   }
 
   return '';

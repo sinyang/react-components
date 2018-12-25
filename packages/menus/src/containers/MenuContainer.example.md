@@ -34,9 +34,7 @@ for (let x = 1; x <= 5; x++) {
 <MenuContainer
   onChange={itemKey => alert(`Selected menu item: "${itemKey}"`)}
   trigger={({ getTriggerProps, triggerRef, isOpen }) => (
-    <Button {...getTriggerProps({ ref: triggerRef, active: isOpen })}>
-      Simple Menu Example
-    </Button>
+    <Button {...getTriggerProps({ ref: triggerRef, active: isOpen })}>Simple Menu Example</Button>
   )}
 >
   {({ getMenuProps, menuRef, placement, getItemProps, focusedKey }) => (
@@ -572,9 +570,7 @@ retrieveMenuItems = (node, getItemProps, getNextItemProps, getPreviousItemProps,
   focusedKey={state.focusedKey}
   isOpen={state.isOpen}
   trigger={({ getTriggerProps, triggerRef, isOpen }) => (
-    <Button {...getTriggerProps({ ref: triggerRef, active: isOpen })}>
-      Simple Menu Example
-    </Button>
+    <Button {...getTriggerProps({ ref: triggerRef, active: isOpen })}>Simple Menu Example</Button>
   )}
 >
   {({

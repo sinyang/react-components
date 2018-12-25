@@ -8,10 +8,9 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { retrieveTheme } from '@zendeskgarden/react-theming';
+import { StyledHeaderItem } from './HeaderItem';
 
 const COMPONENT_ID = 'chrome.header_item_wrapper';
-
-import { StyledHeaderItem } from './HeaderItem';
 
 const PRODUCT = {
   CHAT: 'chat',

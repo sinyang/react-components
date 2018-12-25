@@ -209,11 +209,7 @@ class TooltipContainer extends ControlledComponent {
               }
 
               const tooltip = (
-                <TooltipWrapper
-                  ref={popperProps.ref}
-                  style={popperProps.style}
-                  zIndex={zIndex}
-                >
+                <TooltipWrapper ref={popperProps.ref} style={popperProps.style} zIndex={zIndex}>
                   {render({
                     getTooltipProps: props => this.getTooltipProps(props),
                     isVisible,

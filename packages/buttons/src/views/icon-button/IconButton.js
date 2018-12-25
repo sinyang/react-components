@@ -9,10 +9,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ButtonStyles from '@zendeskgarden/css-buttons';
 import { retrieveTheme } from '@zendeskgarden/react-theming';
+import Button from '../Button';
 
 const COMPONENT_ID = 'buttons.icon_button';
-
-import Button from '../Button';
 
 const SIZE = {
   SMALL: 'small',

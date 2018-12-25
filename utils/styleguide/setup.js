@@ -12,13 +12,13 @@
 
 // Common Libraries
 import styled from 'styled-components';
-global.styled = styled;
 
 // Styleguide components
 import State from './State';
 import CIDTable from './CIDTable';
 import { Grid, Row, Col } from '../../packages/grid/src';
 
+global.styled = styled;
 global.State = State;
 global.CIDTable = CIDTable;
 global.Grid = Grid;
