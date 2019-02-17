@@ -351,7 +351,7 @@ class MultiThumbRange extends Component {
       <StyledSlider isDisabled={disabled}>
         <StyledTrack style={trackStyle}>
           <StyledTrackRail
-            innerRef={ref => {
+            ref={ref => {
               this.trackRailRef = ref;
             }}
           >
@@ -364,7 +364,7 @@ class MultiThumbRange extends Component {
               aria-valuetext={minValue}
               isFocused={isMinThumbFocused}
               style={minThumbStyle}
-              innerRef={ref => {
+              ref={ref => {
                 this.minThumbRef = ref;
               }}
               onKeyDown={e => this.onKeyDown('min')(e)}
@@ -393,7 +393,7 @@ class MultiThumbRange extends Component {
               isFocused={isMaxThumbFocused}
               style={maxThumbStyle}
               onKeyDown={e => this.onKeyDown('max')(e)}
-              innerRef={ref => {
+              ref={ref => {
                 this.maxThumbRef = ref;
               }}
               onFocus={() => {
