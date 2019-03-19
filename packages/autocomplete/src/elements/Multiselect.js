@@ -375,7 +375,7 @@ export default class Multiselect extends Component {
                             autocomplete: 'off',
                             autocapitalize: 'off',
                             autocorrect: 'off',
-                            innerRef: ref => {
+                            ref: ref => {
                               this.inputRef = ref;
                               triggerInputRef(ref);
                               inputRef && inputRef(ref);
