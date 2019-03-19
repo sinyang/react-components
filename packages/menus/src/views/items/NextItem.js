@@ -17,11 +17,11 @@ const COMPONENT_ID = 'menus.next_item';
 /**
  * Accepts all `<li>` props
  */
-const NextItem = styled(Item).attrs({
+const NextItem = styled(Item).attrs(({ className }) => ({
   'data-garden-id': COMPONENT_ID,
   'data-garden-version': PACKAGE_VERSION,
-  className: MenuStyles['c-menu__item--next']
-})`
+  className: `${className} ${MenuStyles['c-menu__item--next']}`
+}))`
   ${props => retrieveTheme(COMPONENT_ID, props)};
 `;
 

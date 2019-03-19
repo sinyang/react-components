@@ -17,11 +17,11 @@ const COMPONENT_ID = 'menus.add_item';
 /**
  * Accepts all `<li>` props
  */
-const AddItem = styled(Item).attrs({
+const AddItem = styled(Item).attrs(({ className }) => ({
   'data-garden-id': COMPONENT_ID,
   'data-garden-version': PACKAGE_VERSION,
-  className: MenuStyles['c-menu__item--add']
-})`
+  className: `${className} ${MenuStyles['c-menu__item--add']}`
+}))`
   ${props => retrieveTheme(COMPONENT_ID, props)};
 `;
 

@@ -23,6 +23,7 @@ const HeaderItem = styled(Item).attrs({
   'data-garden-version': PACKAGE_VERSION,
   className: props =>
     className(MenuStyles['c-menu__item--header'], {
+      [props.className]: !!props.className,
       [MenuStyles['c-menu__item--header--icon']]: props.containsIcon
     })
 })`
