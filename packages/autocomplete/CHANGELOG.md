@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/zendeskgarden/react-components/compare/@zendeskgarden/react-autocomplete@0.9.0...@zendeskgarden/react-autocomplete@0.9.1) (2019-03-15)
+
+
+### Bug Fixes
+
+* **autocomplete:** Pass through popperModifiers from high abstraction components ([#290](https://github.com/zendeskgarden/react-components/issues/290)) ([1606f4d](https://github.com/zendeskgarden/react-components/commit/1606f4d))
+
+
+
+
+
+# [0.9.0](https://github.com/zendeskgarden/react-components/compare/@zendeskgarden/react-autocomplete@0.8.5...@zendeskgarden/react-autocomplete@0.9.0) (2019-03-12)
+
+**Note:** Version bump only for package @zendeskgarden/react-autocomplete
+
+
+
+
+
+## [0.8.5](https://github.com/zendeskgarden/react-components/compare/@zendeskgarden/react-autocomplete@0.8.4...@zendeskgarden/react-autocomplete@0.8.5) (2019-03-06)
+
+**Note:** Version bump only for package @zendeskgarden/react-autocomplete
+
+
+
+
+
+## [0.8.4](https://github.com/zendeskgarden/react-components/compare/@zendeskgarden/react-autocomplete@0.8.3...@zendeskgarden/react-autocomplete@0.8.4) (2019-03-05)
+
+**Note:** Version bump only for package @zendeskgarden/react-autocomplete
+
+
+
+
+
+## [0.8.3](https://github.com/zendeskgarden/react-components/compare/@zendeskgarden/react-autocomplete@0.8.2...@zendeskgarden/react-autocomplete@0.8.3) (2019-02-28)
+
+**Note:** Version bump only for package @zendeskgarden/react-autocomplete
+
+
+
+
+
 ## [0.8.2](https://github.com/zendeskgarden/react-components/compare/@zendeskgarden/react-autocomplete@0.8.1...@zendeskgarden/react-autocomplete@0.8.2) (2019-02-11)
 
 **Note:** Version bump only for package @zendeskgarden/react-autocomplete

@@ -10,9 +10,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { MenuView, Item } from '@zendeskgarden/react-menus';
 import { TextGroup, Label, FauxInput, Input, Hint, Message } from '@zendeskgarden/react-textfields';
+import { Tag, Close } from '@zendeskgarden/react-tags';
+import { Anchor } from '@zendeskgarden/react-buttons';
 import { FieldContainer, KEY_CODES } from '@zendeskgarden/react-selection';
 import AutocompleteContainer from '../containers/AutocompleteContainer';
 
+const DEFAULT_NUM_TAGS = 4;
 const VALIDATION = {
   SUCCESS: 'success',
   WARNING: 'warning',
@@ -31,10 +34,22 @@ const StyledMenuOverflow = styled.div`
 `;
 
 const StyledInput = styled(Input)`
+  && {
+    flex-basis: 60px;
+    flex-grow: 1;
+    margin: 2px;
+    width: inherit;
+    min-width: 60px;
+  }
+
   ${props =>
+    props.selectedValues.length !== 0 && // eslint-disable-line
+    (!props.isFocused || props.tagFocusedKey !== undefined) &&
     !props.isOpen &&
+    !props.placeholder &&
     `
-    && {
+    &&& {
+      margin: 0;
       opacity: 0;
       height: 0;
       min-height: 0;
@@ -48,12 +63,20 @@ const StyledFauxInput = styled(FauxInput)`
   cursor: text;
 `;
 
-const StyledValueWrapper = styled.div`
-  display: inline-block;
-  vertical-align: middle;
+const StyledSpacedTag = styled(Tag)`
+  margin: 2px;
 `;
 
-export default class Autocomplete extends Component {
+const StyledMoreAnchor = styled(Anchor)`
+  && {
+    display: flex;
+    align-items: center;
+    margin: 2px;
+    min-height: 1em;
+  }
+`;
+
+export default class Multiselect extends Component {
   static propTypes = {
     label: PropTypes.string,
     'aria-label': PropTypes.string,
@@ -66,9 +89,8 @@ export default class Autocomplete extends Component {
     message: PropTypes.node,
     hint: PropTypes.node,
     small: PropTypes.bool,
-    /** Applies inset `box-shadow` styling on focus */
     focusInset: PropTypes.bool,
-    selectedValue: PropTypes.string,
+    selectedValues: PropTypes.arrayOf(PropTypes.string),
     onChange: PropTypes.func,
     inputRef: PropTypes.func,
     placeholder: PropTypes.string,
@@ -78,7 +100,9 @@ export default class Autocomplete extends Component {
     noOptionsMessage: PropTypes.string,
     renderOption: PropTypes.func,
     renderDropdown: PropTypes.func,
+    renderShowMore: PropTypes.func,
     optionFilter: PropTypes.func,
+    closeOnSelect: PropTypes.bool,
     /**
      * Passes options to [Popper.JS Instance](https://github.com/FezVrasta/popper.js/blob/master/docs/_includes/popper-documentation.md#new-popperreference-popper-options)
      */
@@ -87,7 +111,8 @@ export default class Autocomplete extends Component {
 
   static defaultProps = {
     noOptionsMessage: 'No matches found',
-    maxHeight: '400px'
+    maxHeight: '400px',
+    small: false
   };
 
   state = {
@@ -95,8 +120,10 @@ export default class Autocomplete extends Component {
     isFocused: false,
     isHovered: false,
     focusedKey: undefined,
+    tagFocusedKey: undefined,
     inputValue: '',
-    value: undefined
+    value: undefined,
+    closeOnSelect: false
   };
 
   defaultOptionFilter = (original, comparison) => {
@@ -112,12 +139,12 @@ export default class Autocomplete extends Component {
     return this.props.options.filter(option => optionFilter(option.label, this.state.inputValue));
   };
 
-  renderMenuItems = getItemProps => {
-    const { noOptionsMessage, renderOption, selectedValue } = this.props;
+  renderMenuItems = (getItemProps, selectedValuesDictionary) => {
+    const { noOptionsMessage, renderOption } = this.props;
     const { focusedKey } = this.state;
 
     const matchingOptions = this.getMatchingOptions().map(option => {
-      const checked = selectedValue === option.value;
+      const checked = !!selectedValuesDictionary[option.value];
 
       const props = getItemProps({
         key: option.value,
@@ -142,29 +169,106 @@ export default class Autocomplete extends Component {
     return <StyledNoItemsMessage>{noOptionsMessage}</StyledNoItemsMessage>;
   };
 
+  renderTags = (isFocused, selectedKeys, isSmall, tagFocusedKey, getTagProps) => {
+    const { renderShowMore, disabled } = this.props;
+    const keys = Object.keys(selectedKeys);
+
+    if (isFocused && !disabled) {
+      return keys.map(key => (
+        <StyledSpacedTag
+          {...getTagProps({
+            key,
+            size: isSmall ? undefined : 'large',
+            focused: tagFocusedKey === key
+          })}
+        >
+          {key}
+          <Close
+            onClick={() => {
+              if (!disabled) {
+                this.deleteTag(key);
+              }
+            }}
+          />
+        </StyledSpacedTag>
+      ));
+    }
+
+    const labels = [];
+
+    for (let x = 0; x < DEFAULT_NUM_TAGS && x < keys.length; x++) {
+      const key = keys[x];
+
+      labels.push(
+        <StyledSpacedTag
+          {...getTagProps({
+            key,
+            size: isSmall ? undefined : 'large',
+            focused: tagFocusedKey === key && !disabled
+          })}
+        >
+          {key}
+          <Close
+            onClick={() => {
+              if (!disabled) {
+                this.deleteTag(key);
+              }
+            }}
+          />
+        </StyledSpacedTag>
+      );
+    }
+
+    if (keys.length > 4) {
+      labels.push(
+        <StyledMoreAnchor tabIndex={-1} key="more-anchor">
+          {renderShowMore ? renderShowMore(keys.length - 4) : `+ ${keys.length - 4} more`}
+        </StyledMoreAnchor>
+      );
+    }
+
+    return labels;
+  };
+
+  deleteTag = key => {
+    const { onChange, disabled, selectedValues = [] } = this.props;
+
+    if (disabled) {
+      return;
+    }
+
+    const filteredTags = selectedValues.filter(value => {
+      return value !== key;
+    });
+
+    this.setState({ tagFocusedKey: undefined }, () => {
+      onChange && onChange(filteredTags);
+    });
+  };
+
   render() {
     const {
       label,
       'aria-label': ariaLabel,
       hint,
+      small,
+      focusInset,
       disabled,
-      options,
-      selectedValue,
+      selectedValues = [],
       onChange,
       placeholder,
       maxHeight,
       renderDropdown,
       inputRef,
       message,
-      small,
-      focusInset,
       validation,
+      closeOnSelect,
       popperModifiers
     } = this.props;
-    const { isOpen, focusedKey, isFocused, isHovered, inputValue } = this.state;
+    const { isOpen, focusedKey, tagFocusedKey, isFocused, isHovered, inputValue } = this.state;
 
-    const optionDictionary = options.reduce((dictionary, option) => {
-      dictionary[option.value] = option.label;
+    const selectedValuesDictionary = selectedValues.reduce((dictionary, value) => {
+      dictionary[value] = value;
 
       return dictionary;
     }, {});
@@ -197,12 +301,23 @@ export default class Autocomplete extends Component {
             <AutocompleteContainer
               isOpen={isOpen}
               focusedKey={focusedKey}
+              tagFocusedKey={tagFocusedKey}
               popperModifiers={popperModifiers}
               onSelect={selectedKey => {
-                onChange && onChange(selectedKey);
+                if (selectedValuesDictionary[selectedKey]) {
+                  delete selectedValuesDictionary[selectedKey];
+                } else {
+                  selectedValuesDictionary[selectedKey] = true;
+                }
+
+                this.setState({ inputValue: '' }, () => {
+                  onChange && onChange(Object.keys(selectedValuesDictionary));
+                });
+
+                return !closeOnSelect;
               }}
               onStateChange={newState => {
-                if (!newState.isOpen) {
+                if (typeof newState.isOpen !== 'undefined' && !newState.isOpen) {
                   newState.inputValue = '';
                 }
 
@@ -211,17 +326,19 @@ export default class Autocomplete extends Component {
               trigger={({
                 getTriggerProps,
                 getInputProps,
+                getTagProps,
                 triggerRef,
                 inputRef: triggerInputRef
               }) => {
                 let triggerProps = getTriggerProps({
                   open: isOpen,
-                  focused: isFocused || isOpen,
+                  small,
+                  focused: isFocused || isOpen || typeof tagFocusedKey !== 'undefined',
                   hovered: isHovered,
                   select: true,
-                  small,
-                  focusInset,
+                  tagLayout: true,
                   validation,
+                  focusInset,
                   'aria-label': ariaLabel,
                   inputRef: ref => {
                     this.wrapperRef = ref;
@@ -232,18 +349,23 @@ export default class Autocomplete extends Component {
                 if (disabled) {
                   triggerProps = {
                     disabled: true,
-                    small,
-                    focusInset,
-                    validation,
                     select: true,
+                    tagLayout: true,
+                    small,
+                    validation,
+                    focusInset,
                     'aria-label': ariaLabel
                   };
                 }
 
                 return (
                   <StyledFauxInput {...triggerProps}>
-                    {!isOpen && (
-                      <StyledValueWrapper>{optionDictionary[selectedValue]}</StyledValueWrapper>
+                    {this.renderTags(
+                      isOpen || typeof tagFocusedKey !== 'undefined' || isFocused,
+                      selectedValuesDictionary,
+                      small,
+                      tagFocusedKey,
+                      getTagProps
                     )}
                     <StyledInput
                       {...getInputProps(
@@ -253,18 +375,26 @@ export default class Autocomplete extends Component {
                             autocomplete: 'off',
                             autocapitalize: 'off',
                             autocorrect: 'off',
-                            ref: ref => {
+                            innerRef: ref => {
                               this.inputRef = ref;
                               triggerInputRef(ref);
                               inputRef && inputRef(ref);
                             },
                             value: inputValue,
                             isOpen,
+                            isFocused,
+                            tagFocusedKey,
+                            selectedValues,
                             placeholder,
                             onChange: e => {
                               this.setState({ inputValue: e.target.value });
                             },
-                            onFocus: () => {
+                            onFocus: e => {
+                              if (disabled) {
+                                e.preventDefault();
+
+                                return;
+                              }
                               this.setState({ isFocused: true });
                             },
                             onBlur: () => {
@@ -278,6 +408,23 @@ export default class Autocomplete extends Component {
                                 isOpen
                               ) {
                                 e.preventDefault();
+
+                                return;
+                              }
+
+                              if (
+                                e.keyCode === KEY_CODES.DELETE ||
+                                e.keyCode === KEY_CODES.BACKSPACE
+                              ) {
+                                if (tagFocusedKey !== undefined) {
+                                  this.deleteTag(tagFocusedKey);
+
+                                  return;
+                                }
+
+                                if (e.target.value === '') {
+                                  this.deleteTag(selectedValues[selectedValues.length - 1]);
+                                }
                               }
                             }
                           },
@@ -299,7 +446,7 @@ export default class Autocomplete extends Component {
                   }
                 });
 
-                props.children = this.renderMenuItems(getItemProps);
+                props.children = this.renderMenuItems(getItemProps, selectedValuesDictionary);
 
                 if (renderDropdown) {
                   return renderDropdown(props);

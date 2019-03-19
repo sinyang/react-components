@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/zendeskgarden/react-components/compare/@zendeskgarden/react-loaders@0.3.1...@zendeskgarden/react-loaders@0.4.0) (2019-03-16)
+
+
+### Features
+
+* **loaders:** introduce Inline component ([#289](https://github.com/zendeskgarden/react-components/issues/289)) ([dc67d4a](https://github.com/zendeskgarden/react-components/commit/dc67d4a))
+
+
+
+
+
+## [0.3.1](https://github.com/zendeskgarden/react-components/compare/@zendeskgarden/react-loaders@0.3.0...@zendeskgarden/react-loaders@0.3.1) (2019-02-22)
+
+
+### Bug Fixes
+
+* **loaders:** increase alpha of skeleton animation ([#274](https://github.com/zendeskgarden/react-components/issues/274)) ([8e3876b](https://github.com/zendeskgarden/react-components/commit/8e3876b))
+
+
+
+
+
 # [0.3.0](https://github.com/zendeskgarden/react-components/compare/@zendeskgarden/react-loaders@0.2.10...@zendeskgarden/react-loaders@0.3.0) (2019-02-13)
 
 
